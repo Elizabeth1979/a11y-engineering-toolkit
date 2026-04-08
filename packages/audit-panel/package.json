@@ -1,0 +1,13 @@
+{
+  "name": "@a11y-toolkit/audit-panel",
+  "version": "0.1.0",
+  "description": "Standalone accessibility audit panel — embeddable on any page",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "vitest run",
+    "build": "node build.mjs"
+  },
+  "devDependencies": {},
+  "license": "MIT"
+}

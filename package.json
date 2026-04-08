@@ -1,16 +1,22 @@
 {
-  "name": "@a11y-toolkit/audit-panel",
+  "name": "a11y-engineering-toolkit",
   "version": "0.1.0",
-  "description": "Standalone accessibility audit panel — embeddable on any page",
+  "private": true,
+  "description": "One-repo accessibility engineering toolkit",
   "type": "module",
-  "main": "src/audit-panel/index.js",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test": "vitest run --config packages/audit-panel/vitest.config.js",
+    "test:watch": "vitest --config packages/audit-panel/vitest.config.js",
+    "build": "node packages/audit-panel/build.mjs",
+    "build:all": "npm run build"
   },
   "devDependencies": {
     "vitest": "^3.1.1",
-    "jsdom": "^26.0.0"
+    "jsdom": "^26.0.0",
+    "esbuild": "^0.25.0"
   },
   "license": "MIT"
 }

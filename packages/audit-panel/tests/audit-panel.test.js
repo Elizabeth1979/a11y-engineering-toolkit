@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 
 // We'll import the module under test
-import { initA11yAudit, destroyA11yAudit, _internals } from '../src/audit-panel/index.js';
+import { initA11yAudit, destroyA11yAudit, _internals } from '../src/index.js';
 
 describe('Audit Panel — public API', () => {
   afterEach(() => {

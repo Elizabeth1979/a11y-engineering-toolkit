@@ -1,31 +1,49 @@
 # A11y Engineering Toolkit
 
-Standalone accessibility audit tools, extracted from the Hermes dashboard.
+One-repo multi-module accessibility toolkit. Each tool lives under `packages/`.
+
+## Repository Structure
+
+```
+packages/
+  audit-panel/          # Floating a11y audit panel (10 tools)
+    src/index.js        # Main module source
+    src/styles.css      # Panel + overlay styles
+    src/entry-iife.js   # IIFE entry (auto-inits, injects CSS)
+    tests/              # Vitest tests
+    build.mjs           # esbuild bundler script
+    dist/               # Build output (gitignored)
+      audit-panel.iife.js   # Browser-ready IIFE bundle
+      bookmarklet.js         # Tiny javascript: bookmarklet snippet
+```
+
+## Quick Start
+
+```bash
+npm install
+npm test          # Run all tests (28 passing)
+npm run build     # Build IIFE bundle + bookmarklet
+```
 
 ## Audit Panel
 
-A floating panel with 10 audit tools: Headings, Landmarks, Alt Text, Interactive Labels, Hidden Elements, Tab Order, Contrast, Focus Indicators, ARIA Validation, and Form Labels.
-
-### Quick Start
+### As ES Module
 
 ```js
-import { initA11yAudit, destroyA11yAudit } from './src/audit-panel/index.js';
-
-// Mount into document.body (default)
+import { initA11yAudit, destroyA11yAudit } from './packages/audit-panel/src/index.js';
 initA11yAudit();
-
-// Or mount into a specific container
-initA11yAudit({ container: document.getElementById('my-root') });
-
-// Tear down when done
 destroyA11yAudit();
 ```
 
-Include the CSS on your page:
+### As Bookmarklet
 
-```html
-<link rel="stylesheet" href="./src/audit-panel/styles.css">
-```
+1. Run `npm run build`
+2. Host `packages/audit-panel/dist/audit-panel.iife.js` on a server
+3. Edit the URL in `packages/audit-panel/dist/bookmarklet.js` (replace `YOUR_HOST`)
+4. Create a browser bookmark with the bookmarklet content as the URL
+5. Click it on any page to toggle the audit panel
+
+The bookmarklet is tiny (~300 chars) — it just injects a `<script>` tag that loads the built bundle. The bundle auto-initializes the panel and injects styles.
 
 ### API
 
@@ -34,18 +52,9 @@ Include the CSS on your page:
 | `initA11yAudit(options?)` | Create and mount the panel. Options: `{ container: HTMLElement }` |
 | `destroyA11yAudit()` | Remove the panel and clean up overlays |
 
-### Tests
+## Tests
 
-```bash
-npm install
-npm test
-```
-
-Uses Vitest + jsdom. Tests cover: init/destroy lifecycle, toggle/close behavior, double-init guard, tool rendering, headings/landmarks/alt-text runners.
-
-### No Hermes Dependencies
-
-This module has zero dependency on Hermes dashboard globals (`window.__a11yTesterInit`, `#a11y-widget-btn`, etc.). It works on any page.
+Uses Vitest + jsdom. Tests cover: init/destroy lifecycle, toggle/close, tool runners, and build output validation.
 
 ## License
 
