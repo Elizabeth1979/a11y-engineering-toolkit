@@ -27,6 +27,20 @@ npm run build     # Build IIFE bundle + bookmarklet
 
 ## Audit Panel
 
+### For Testers
+
+Use the public page:
+
+- https://elizabeth1979.github.io/a11y-engineering-toolkit/
+
+That page is for non-developers. It lets you:
+
+1. Drag the bookmarklet to the bookmarks bar
+2. Or copy the bookmarklet and paste it into a new bookmark
+3. Click the bookmark on any page to open the audit panel
+
+### For Developers
+
 ### As ES Module
 
 ```js
@@ -35,15 +49,16 @@ initA11yAudit();
 destroyA11yAudit();
 ```
 
-### As Bookmarklet
+### Build + bookmarklet hosting
+
+Developers maintain it like this:
 
 1. Run `npm run build`
 2. The build copies public files into `docs/`
 3. GitHub Pages serves:
    - `https://elizabeth1979.github.io/a11y-engineering-toolkit/audit-panel.iife.js`
    - `https://elizabeth1979.github.io/a11y-engineering-toolkit/bookmarklet.js`
-4. Open the Pages site and copy the bookmarklet text
-5. Create a browser bookmark with that value as the URL
+4. Testers use the public page above — they do not need to build anything
 
 The bookmarklet is tiny (~300 chars) — it just injects a `<script>` tag that loads the built bundle. The bundle auto-initializes the panel and injects styles.
 

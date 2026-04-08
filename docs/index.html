@@ -9,7 +9,7 @@
       font-family: Inter, system-ui, sans-serif;
       max-width: 760px;
       margin: 40px auto;
-      padding: 0 16px;
+      padding: 0 16px 40px;
       line-height: 1.5;
       color: #0f172a;
     }
@@ -30,7 +30,10 @@
       text-decoration: none;
       font-weight: 600;
     }
-    code, textarea {
+    a.button.secondary {
+      background: #0f172a;
+    }
+    code, textarea, .drag-link {
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     }
     textarea {
@@ -38,32 +41,65 @@
       min-height: 120px;
       margin-top: 12px;
     }
+    .drag-link {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: #0f766e;
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      cursor: grab;
+    }
+    ol {
+      padding-left: 20px;
+    }
+    .muted {
+      color: #475569;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
   <h1>A11y Engineering Toolkit</h1>
-  <p>Public build for the audit panel bookmarklet.</p>
+  <p>Use this page if you are a tester and just want the audit panel bookmark.</p>
 
   <div class="card">
-    <h2>Audit panel bundle</h2>
-    <p><a href="./audit-panel.iife.js">audit-panel.iife.js</a></p>
+    <h2>For testers</h2>
+    <ol>
+      <li>Show your bookmarks bar.</li>
+      <li>Drag the button below into the bookmarks bar.</li>
+      <li>Open any page you want to test.</li>
+      <li>Click the new bookmark.</li>
+    </ol>
+    <p><a class="drag-link" id="dragBookmarklet" href="#">A11y Audit Panel</a></p>
+    <p class="muted">If drag-and-drop does not work, use the copy option below and paste it into the URL field of a new bookmark.</p>
   </div>
 
   <div class="card">
-    <h2>Bookmarklet</h2>
-    <p>Create a bookmark, then paste this as the URL:</p>
+    <h2>Copy fallback</h2>
+    <p>Copy the bookmarklet text, create a new bookmark, and paste it into the bookmark URL/location field.</p>
     <textarea id="bookmarklet" readonly></textarea>
-    <p><a class="button" id="copyBtn" href="#">Copy bookmarklet</a></p>
+    <p><a class="button secondary" id="copyBtn" href="#">Copy bookmarklet</a></p>
+  </div>
+
+  <div class="card">
+    <h2>Developer files</h2>
+    <p><a href="./audit-panel.iife.js">audit-panel.iife.js</a></p>
+    <p><a href="https://github.com/Elizabeth1979/a11y-engineering-toolkit">GitHub repo</a></p>
   </div>
 
   <script>
     fetch('./bookmarklet.js')
       .then(r => r.text())
       .then(text => {
-        document.getElementById('bookmarklet').value = text.trim();
+        const value = text.trim();
+        document.getElementById('bookmarklet').value = value;
+        document.getElementById('dragBookmarklet').href = value;
         document.getElementById('copyBtn').addEventListener('click', async (e) => {
           e.preventDefault();
-          await navigator.clipboard.writeText(text.trim());
+          await navigator.clipboard.writeText(value);
           e.target.textContent = 'Copied';
         });
       });
