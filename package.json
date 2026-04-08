@@ -8,9 +8,13 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "vitest run --config packages/audit-panel/vitest.config.js",
+    "test": "vitest run --config packages/audit-panel/vitest.config.js && vitest run --config packages/ux-widget/vitest.config.js",
+    "test:audit-panel": "vitest run --config packages/audit-panel/vitest.config.js",
+    "test:ux-widget": "vitest run --config packages/ux-widget/vitest.config.js",
     "test:watch": "vitest --config packages/audit-panel/vitest.config.js",
-    "build": "node packages/audit-panel/build.mjs",
+    "build": "node packages/audit-panel/build.mjs && node packages/ux-widget/build.mjs",
+    "build:audit-panel": "node packages/audit-panel/build.mjs",
+    "build:ux-widget": "node packages/ux-widget/build.mjs",
     "build:all": "npm run build"
   },
   "devDependencies": {

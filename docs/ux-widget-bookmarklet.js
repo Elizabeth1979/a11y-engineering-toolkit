@@ -1,0 +1,1 @@
+javascript:void(function(){if(window.__uxWidgetLoaded){window.A11yToolkit&&window.A11yToolkit.destroyUxWidget();delete window.__uxWidgetLoaded;return}var s=document.createElement('script');s.src='https://elizabeth1979.github.io/a11y-engineering-toolkit/ux-widget.iife.js';s.onload=function(){window.__uxWidgetLoaded=true};document.head.appendChild(s)}())

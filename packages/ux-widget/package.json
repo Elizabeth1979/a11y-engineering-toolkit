@@ -1,0 +1,13 @@
+{
+  "name": "@a11y-toolkit/ux-widget",
+  "version": "0.1.0",
+  "description": "Standalone embeddable accessibility UX widget — floating panel with toggle features",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "vitest run",
+    "build": "node build.mjs"
+  },
+  "devDependencies": {},
+  "license": "MIT"
+}
