@@ -7,7 +7,6 @@
   <style>
     :root {
       --bg: #07111b;
-      --bg-2: #0c1724;
       --card: rgba(15, 23, 36, 0.88);
       --card-2: rgba(10, 18, 30, 0.92);
       --border: rgba(148, 163, 184, 0.16);
@@ -18,9 +17,7 @@
       --shadow: 0 30px 80px rgba(0, 0, 0, 0.38);
       --radius: 20px;
     }
-
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
       font-family: Inter, system-ui, sans-serif;
@@ -31,33 +28,25 @@
       color: var(--text);
       line-height: 1.55;
     }
-
     .wrap {
-      max-width: 1040px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 40px 20px 72px;
     }
-
     .hero {
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
       gap: 22px;
       align-items: stretch;
     }
-
-    .hero-card,
-    .card {
+    .hero-card, .card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
     }
-
-    .hero-card {
-      padding: 28px;
-    }
-
+    .hero-card { padding: 28px; }
     .eyebrow {
       display: inline-flex;
       align-items: center;
@@ -71,83 +60,34 @@
       letter-spacing: 0.04em;
       text-transform: uppercase;
     }
-
     h1 {
       margin: 16px 0 12px;
       font-size: clamp(34px, 6vw, 56px);
       line-height: 1.02;
       letter-spacing: -0.03em;
     }
-
     .lead {
       margin: 0;
-      max-width: 620px;
+      max-width: 680px;
       color: var(--text-2);
       font-size: 18px;
     }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 24px;
-    }
-
-    .button,
-    .drag-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      min-height: 48px;
-      padding: 12px 18px;
-      border-radius: 14px;
-      font-weight: 700;
-      text-decoration: none;
-      transition: transform 0.18s ease, filter 0.18s ease, border-color 0.18s ease;
-    }
-
-    .button:hover,
-    .drag-link:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.05);
-    }
-
-    .button.primary,
-    .drag-link {
-      background: linear-gradient(135deg, var(--accent), #4fd1c5);
-      color: #05232a;
-    }
-
-    .button.secondary {
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
-    }
-
     .hero-side {
       padding: 22px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
-
-    .hero-side h2,
-    .card h2 {
+    .hero-side h2, .card h2 {
       margin: 0 0 10px;
       font-size: 22px;
     }
-
-    .muted {
-      color: var(--text-2);
-    }
-
+    .muted { color: var(--text-2); }
     .bullets {
       display: grid;
       gap: 12px;
       margin-top: 18px;
     }
-
     .bullet {
       display: flex;
       gap: 10px;
@@ -155,7 +95,6 @@
       color: var(--text-2);
       font-size: 15px;
     }
-
     .bullet-dot {
       width: 9px;
       height: 9px;
@@ -165,27 +104,61 @@
       box-shadow: 0 0 16px rgba(93, 228, 212, 0.65);
       flex-shrink: 0;
     }
-
+    .tools {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+      margin-top: 22px;
+    }
     .grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 22px;
       margin-top: 22px;
     }
-
     .card {
       padding: 24px;
       background: var(--card-2);
     }
-
-    ol {
-      margin: 14px 0 0;
-      padding-left: 22px;
-      color: var(--text-2);
+    .tool-name {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
     }
-
-    li + li { margin-top: 8px; }
-
+    .tool-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .button, .drag-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 46px;
+      padding: 12px 18px;
+      border-radius: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.18s ease, filter 0.18s ease;
+    }
+    .button:hover, .drag-link:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+    }
+    .drag-link {
+      background: linear-gradient(135deg, var(--accent), #4fd1c5);
+      color: #05232a;
+    }
+    .button.secondary {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+    }
     .callout {
       margin-top: 16px;
       padding: 14px 16px;
@@ -195,10 +168,15 @@
       color: var(--text);
       font-size: 14px;
     }
-
+    ol {
+      margin: 14px 0 0;
+      padding-left: 22px;
+      color: var(--text-2);
+    }
+    li + li { margin-top: 8px; }
     textarea {
       width: 100%;
-      min-height: 128px;
+      min-height: 120px;
       margin-top: 14px;
       padding: 14px;
       border-radius: 14px;
@@ -208,39 +186,26 @@
       font: 13px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace;
       resize: vertical;
     }
-
     .small-links {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
       margin-top: 16px;
     }
-
     .small-links a {
       color: var(--accent-2);
       text-decoration: none;
       font-weight: 600;
     }
-
-    .small-links a:hover {
-      text-decoration: underline;
-    }
-
+    .small-links a:hover { text-decoration: underline; }
     .footer {
       margin-top: 24px;
       color: var(--text-2);
       font-size: 14px;
     }
-
     @media (max-width: 860px) {
-      .hero,
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .wrap {
-        padding-top: 22px;
-      }
+      .hero, .tools, .grid { grid-template-columns: 1fr; }
+      .wrap { padding-top: 22px; }
     }
   </style>
 </head>
@@ -249,77 +214,95 @@
     <section class="hero">
       <div class="hero-card">
         <div class="eyebrow">Accessibility toolkit</div>
-        <h1>A11y Audit Panel</h1>
-        <p class="lead">A simple bookmark you can click on any page to open a visual accessibility audit panel. Built for QA testers, designers, and developers.</p>
-        <div class="hero-actions">
-          <a class="drag-link" id="dragBookmarklet" href="#">Drag to bookmarks bar</a>
-          <a class="button secondary" id="copyBtn" href="#">Copy bookmarklet</a>
-        </div>
-        <div class="callout">
-          If drag-and-drop does not work, copy the bookmarklet below and paste it into the URL or location field of a new bookmark.
-        </div>
+        <h1>Tester tools in one place</h1>
+        <p class="lead">Drag a bookmark into your browser and use the A11y Audit Panel or the A11y UX Widget on any page. No extension needed.</p>
+        <div class="callout">If drag-and-drop does not work, copy the bookmarklet below and paste it into the URL or location field of a new bookmark.</div>
       </div>
-
       <aside class="hero-side hero-card">
         <div>
-          <h2>What it gives you</h2>
+          <h2>What you get</h2>
           <div class="bullets">
-            <div class="bullet"><span class="bullet-dot"></span><span>Headings, landmarks, alt text, labels, hidden content, tab order, contrast, focus, ARIA, and form checks.</span></div>
-            <div class="bullet"><span class="bullet-dot"></span><span>Works on any page without installing a full extension.</span></div>
-            <div class="bullet"><span class="bullet-dot"></span><span>One bookmark stays the same while you keep shipping updates.</span></div>
+            <div class="bullet"><span class="bullet-dot"></span><span>Audit panel for accessibility testing and issue spotting.</span></div>
+            <div class="bullet"><span class="bullet-dot"></span><span>UX widget for contrast, fonts, motion, cursor, and reading support.</span></div>
+            <div class="bullet"><span class="bullet-dot"></span><span>One public toolkit page, one repo, shared updates.</span></div>
           </div>
         </div>
-        <div class="footer">Public toolkit page for testers. Developer files are below.</div>
+        <div class="footer">Built for testers first. Developer files are below.</div>
       </aside>
+    </section>
+
+    <section class="tools">
+      <div class="card">
+        <div class="tool-name">Tool 1</div>
+        <h2>A11y Audit Panel</h2>
+        <p class="muted">Visual accessibility auditor: headings, landmarks, alt text, labels, hidden content, tab order, contrast, focus, ARIA, and form checks.</p>
+        <div class="tool-actions">
+          <a class="drag-link" id="dragAudit" href="#">Drag audit panel</a>
+          <a class="button secondary" id="copyAudit" href="#">Copy</a>
+        </div>
+        <textarea id="auditCode" readonly></textarea>
+      </div>
+
+      <div class="card">
+        <div class="tool-name">Tool 2</div>
+        <h2>A11y UX Widget</h2>
+        <p class="muted">Live accessibility customization: contrast, color vision filters, dyslexia font, font size, focus, motion, spacing, reading guide, and big cursor.</p>
+        <div class="tool-actions">
+          <a class="drag-link" id="dragWidget" href="#">Drag UX widget</a>
+          <a class="button secondary" id="copyWidget" href="#">Copy</a>
+        </div>
+        <textarea id="widgetCode" readonly></textarea>
+      </div>
     </section>
 
     <section class="grid">
       <div class="card">
-        <h2>How to use it</h2>
+        <h2>How to use</h2>
         <ol>
           <li>Show your browser bookmarks bar.</li>
-          <li>Drag the button above into the bookmarks bar.</li>
+          <li>Drag one of the buttons above into the bookmarks bar.</li>
           <li>Open any site or local page you want to test.</li>
-          <li>Click the bookmark to open the audit panel.</li>
+          <li>Click the bookmark to open that tool.</li>
         </ol>
       </div>
 
       <div class="card">
-        <h2>Copy fallback</h2>
-        <p class="muted">If your browser blocks dragging, copy this value and paste it into a new bookmark’s URL/location field.</p>
-        <textarea id="bookmarklet" readonly></textarea>
-      </div>
-
-      <div class="card">
         <h2>Developer files</h2>
-        <p class="muted">If you are integrating or hosting this tool yourself:</p>
+        <p class="muted">If you are integrating or hosting these tools yourself:</p>
         <div class="small-links">
           <a href="./audit-panel.iife.js">audit-panel.iife.js</a>
-          <a href="./bookmarklet.js">bookmarklet.js</a>
+          <a href="./bookmarklet.js">audit-panel bookmarklet</a>
+          <a href="./ux-widget.iife.js">ux-widget.iife.js</a>
+          <a href="./ux-widget-bookmarklet.js">ux-widget bookmarklet</a>
           <a href="https://github.com/Elizabeth1979/a11y-engineering-toolkit">GitHub repo</a>
         </div>
-      </div>
-
-      <div class="card">
-        <h2>Why this setup</h2>
-        <p class="muted">Testers get one easy entry point. Developers keep one repo with versioned source, builds, and future modules.</p>
       </div>
     </section>
   </div>
 
   <script>
-    fetch('./bookmarklet.js')
-      .then(r => r.text())
-      .then(text => {
-        const value = text.trim();
-        document.getElementById('bookmarklet').value = value;
-        document.getElementById('dragBookmarklet').href = value;
-        document.getElementById('copyBtn').addEventListener('click', async (e) => {
-          e.preventDefault();
-          await navigator.clipboard.writeText(value);
-          e.target.textContent = 'Copied';
-        });
+    async function loadText(path) {
+      const res = await fetch(path);
+      return (await res.text()).trim();
+    }
+
+    function wireTool(code, dragId, copyId, textareaId) {
+      document.getElementById(textareaId).value = code;
+      document.getElementById(dragId).href = code;
+      document.getElementById(copyId).addEventListener('click', async (e) => {
+        e.preventDefault();
+        await navigator.clipboard.writeText(code);
+        e.target.textContent = 'Copied';
       });
+    }
+
+    Promise.all([
+      loadText('./bookmarklet.js'),
+      loadText('./ux-widget-bookmarklet.js')
+    ]).then(([auditCode, widgetCode]) => {
+      wireTool(auditCode, 'dragAudit', 'copyAudit', 'auditCode');
+      wireTool(widgetCode, 'dragWidget', 'copyWidget', 'widgetCode');
+    });
   </script>
 </body>
 </html>
