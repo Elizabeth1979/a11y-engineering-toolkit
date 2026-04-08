@@ -38,10 +38,12 @@ destroyA11yAudit();
 ### As Bookmarklet
 
 1. Run `npm run build`
-2. Host `packages/audit-panel/dist/audit-panel.iife.js` on a server
-3. Edit the URL in `packages/audit-panel/dist/bookmarklet.js` (replace `YOUR_HOST`)
-4. Create a browser bookmark with the bookmarklet content as the URL
-5. Click it on any page to toggle the audit panel
+2. The build copies public files into `docs/`
+3. GitHub Pages serves:
+   - `https://elizabeth1979.github.io/a11y-engineering-toolkit/audit-panel.iife.js`
+   - `https://elizabeth1979.github.io/a11y-engineering-toolkit/bookmarklet.js`
+4. Open the Pages site and copy the bookmarklet text
+5. Create a browser bookmark with that value as the URL
 
 The bookmarklet is tiny (~300 chars) — it just injects a `<script>` tag that loads the built bundle. The bundle auto-initializes the panel and injects styles.
 

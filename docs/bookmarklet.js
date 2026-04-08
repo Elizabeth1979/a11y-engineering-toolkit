@@ -1,0 +1,1 @@
+javascript:void(function(){if(window.__a11yLoaded){window.A11yToolkit&&window.A11yToolkit.destroyA11yAudit();delete window.__a11yLoaded;return}var s=document.createElement('script');s.src='https://elizabeth1979.github.io/a11y-engineering-toolkit/audit-panel.iife.js';s.onload=function(){window.__a11yLoaded=true};document.head.appendChild(s)}())

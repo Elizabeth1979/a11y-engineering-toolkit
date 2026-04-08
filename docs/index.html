@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A11y Engineering Toolkit</title>
+  <style>
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      max-width: 760px;
+      margin: 40px auto;
+      padding: 0 16px;
+      line-height: 1.5;
+      color: #0f172a;
+    }
+    .card {
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+      background: #f8fafc;
+    }
+    a.button {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: #0f766e;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    code, textarea {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+  <h1>A11y Engineering Toolkit</h1>
+  <p>Public build for the audit panel bookmarklet.</p>
+
+  <div class="card">
+    <h2>Audit panel bundle</h2>
+    <p><a href="./audit-panel.iife.js">audit-panel.iife.js</a></p>
+  </div>
+
+  <div class="card">
+    <h2>Bookmarklet</h2>
+    <p>Create a bookmark, then paste this as the URL:</p>
+    <textarea id="bookmarklet" readonly></textarea>
+    <p><a class="button" id="copyBtn" href="#">Copy bookmarklet</a></p>
+  </div>
+
+  <script>
+    fetch('./bookmarklet.js')
+      .then(r => r.text())
+      .then(text => {
+        document.getElementById('bookmarklet').value = text.trim();
+        document.getElementById('copyBtn').addEventListener('click', async (e) => {
+          e.preventDefault();
+          await navigator.clipboard.writeText(text.trim());
+          e.target.textContent = 'Copied';
+        });
+      });
+  </script>
+</body>
+</html>
