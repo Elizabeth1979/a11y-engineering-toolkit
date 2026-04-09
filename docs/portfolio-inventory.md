@@ -27,9 +27,11 @@ If a repo, tool, workflow, or research asset is primarily about accessibility en
 - `a11y-expert-mcp`
   - Role: MCP module for AI assistants
   - Toolkit fit: code review, ARIA guidance, implementation patterns
+  - Repo shape: stays a separate linked module repo for now
 - `a11y-skills`
   - Role: reusable accessibility skills/prompts
   - Toolkit fit: designer and developer workflows
+  - Repo shape: stays a separate linked shared repo for now
 - `accessibility-validator`
   - Role: validation engine / rules input
   - Toolkit fit: CLI or CI audit module candidate
@@ -82,16 +84,13 @@ If a repo, tool, workflow, or research asset is primarily about accessibility en
   - Role: product/research stream for adaptive UI
   - Toolkit fit: future product and research input
 
-## First migration order
+## First architecture decision
 
-1. `a11y-expert-mcp`
-2. `a11y-skills`
-3. `accessibility-validator`
-4. `clip-to-ticket`
-5. `sr-visualizer`
-6. `visua11y` / `a11y-first-ext`
+1. Keep `a11y-expert-mcp` as its own repo and link it as a toolkit module repo
+2. Keep `a11y-skills` as its own repo and link it as a shared workflow repo
+3. Move nothing until there is a concrete benefit like shared release flow, shared tests, or reduced duplication
 
-Reason: these are the clearest shared engineering assets, not just historical workshop content.
+Reason: separate working repos are cheaper to maintain than forced consolidation.
 
 ## Standard mapping model
 

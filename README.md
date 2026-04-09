@@ -77,6 +77,12 @@ Inventory file:
 
 - `docs/portfolio-inventory.md`
 
+Current architecture rule:
+
+- `a11y-engineering-toolkit` is the umbrella repo and public entry point
+- `a11y-expert-mcp` stays its own repo and is linked as a toolkit module repo
+- `a11y-skills` stays its own repo and is linked as a shared workflow/skills repo
+
 Current in-scope portfolio items include:
 
 - `a11y-expert-mcp`
@@ -94,13 +100,7 @@ Current in-scope portfolio items include:
 - `a11y-html-aria`
 - `a11y-memory-game`
 
-Not all of these need to be physically moved into this repo immediately. Some are best treated first as:
-
-- reference implementations
-- research inputs
-- training content
-- future modules
-
+Not all of these need to be physically moved into this repo immediately. The default is link first, merge later only if there is a real benefit.
 ## Operating rule
 
 Anything primarily about accessibility engineering should be represented here as one of:
