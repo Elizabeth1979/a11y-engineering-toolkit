@@ -683,8 +683,13 @@
               checks.
             </p>
             <div class="tool-actions">
-              <a class="drag-link" id="dragAudit" href="#">Drag audit panel</a>
-              <a class="button secondary" id="copyAudit" href="#">Copy</a>
+              <button class="button secondary" id="showAudit" type="button">
+                Show audit panel
+              </button>
+              <a class="drag-link" id="dragAudit" href="#"
+                >Drag to bookmarks bar</a
+              >
+              <a class="button secondary" id="copyAudit" href="#">Copy code</a>
             </div>
             <details class="code-fallback">
               <summary>Show bookmarklet code (manual paste fallback)</summary>
@@ -704,8 +709,13 @@
               and big cursor.
             </p>
             <div class="tool-actions">
-              <a class="drag-link" id="dragWidget" href="#">Drag UX widget</a>
-              <a class="button secondary" id="copyWidget" href="#">Copy</a>
+              <button class="button secondary" id="showWidget" type="button">
+                Show UX widget
+              </button>
+              <a class="drag-link" id="dragWidget" href="#"
+                >Drag to bookmarks bar</a
+              >
+              <a class="button secondary" id="copyWidget" href="#">Copy code</a>
             </div>
             <details class="code-fallback">
               <summary>Show bookmarklet code (manual paste fallback)</summary>
@@ -742,9 +752,29 @@
         return (await res.text()).trim();
       }
 
-      function wireTool(code, dragId, copyId, textareaId) {
+      function showTool(scriptUrl, loadedFlag, destroyFn) {
+        if (window[loadedFlag]) {
+          window.A11yToolkit &&
+            window.A11yToolkit[destroyFn] &&
+            window.A11yToolkit[destroyFn]();
+          delete window[loadedFlag];
+          return;
+        }
+        const s = document.createElement("script");
+        s.src = scriptUrl;
+        s.onload = () => {
+          window[loadedFlag] = true;
+        };
+        document.head.appendChild(s);
+      }
+
+      function wireTool(code, showId, dragId, copyId, textareaId, showConfig) {
         document.getElementById(textareaId).value = code;
         document.getElementById(dragId).href = code;
+        document.getElementById(showId).addEventListener("click", (e) => {
+          e.preventDefault();
+          showTool(showConfig.url, showConfig.flag, showConfig.destroy);
+        });
         document.getElementById(copyId).addEventListener("click", async (e) => {
           e.preventDefault();
           await navigator.clipboard.writeText(code);
@@ -756,8 +786,30 @@
         loadText("./bookmarklet.js"),
         loadText("./ux-widget-bookmarklet.js"),
       ]).then(([auditCode, widgetCode]) => {
-        wireTool(auditCode, "dragAudit", "copyAudit", "auditCode");
-        wireTool(widgetCode, "dragWidget", "copyWidget", "widgetCode");
+        wireTool(
+          auditCode,
+          "showAudit",
+          "dragAudit",
+          "copyAudit",
+          "auditCode",
+          {
+            url: "./audit-panel.iife.js",
+            flag: "__a11yLoaded",
+            destroy: "destroyA11yAudit",
+          },
+        );
+        wireTool(
+          widgetCode,
+          "showWidget",
+          "dragWidget",
+          "copyWidget",
+          "widgetCode",
+          {
+            url: "./ux-widget.iife.js",
+            flag: "__uxWidgetLoaded",
+            destroy: "destroyUxWidget",
+          },
+        );
       });
     </script>
   </body>
