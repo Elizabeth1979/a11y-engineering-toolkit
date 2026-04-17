@@ -12,15 +12,20 @@
     "test:audit-panel": "vitest run --config packages/audit-panel/vitest.config.js",
     "test:ux-widget": "vitest run --config packages/ux-widget/vitest.config.js",
     "test:watch": "vitest --config packages/audit-panel/vitest.config.js",
+    "test:e2e": "playwright test",
+    "test:all": "npm test && npm run test:e2e",
     "build": "node packages/audit-panel/build.mjs && node packages/ux-widget/build.mjs",
     "build:audit-panel": "node packages/audit-panel/build.mjs",
     "build:ux-widget": "node packages/ux-widget/build.mjs",
     "build:all": "npm run build"
   },
   "devDependencies": {
-    "vitest": "^3.1.1",
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.50.0",
+    "esbuild": "^0.25.0",
+    "http-server": "^14.1.1",
     "jsdom": "^26.0.0",
-    "esbuild": "^0.25.0"
+    "vitest": "^3.1.1"
   },
   "license": "MIT"
 }
