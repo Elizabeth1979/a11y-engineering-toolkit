@@ -1229,8 +1229,16 @@
                 <button class="btn btn-primary" id="showAudit" type="button">
                   Show audit panel
                 </button>
-                <a class="btn" id="dragAudit" href="#">Drag to bookmarks</a>
-                <a class="btn" id="copyAudit" href="#">Copy code</a>
+                <a
+                  class="btn"
+                  id="dragAudit"
+                  href="javascript:void(0)"
+                  title="Drag this link to your bookmarks bar"
+                  >A11y Audit Panel</a
+                >
+                <button class="btn" id="copyAudit" type="button">
+                  Copy code
+                </button>
               </div>
               <details class="code-fallback">
                 <summary>Bookmarklet source (manual paste)</summary>
@@ -1253,8 +1261,16 @@
                 <button class="btn btn-primary" id="showWidget" type="button">
                   Show UX widget
                 </button>
-                <a class="btn" id="dragWidget" href="#">Drag to bookmarks</a>
-                <a class="btn" id="copyWidget" href="#">Copy code</a>
+                <a
+                  class="btn"
+                  id="dragWidget"
+                  href="javascript:void(0)"
+                  title="Drag this link to your bookmarks bar"
+                  >A11y UX Widget</a
+                >
+                <button class="btn" id="copyWidget" type="button">
+                  Copy code
+                </button>
               </div>
               <details class="code-fallback">
                 <summary>Bookmarklet source (manual paste)</summary>
@@ -1310,71 +1326,95 @@
       })();
 
       /* ============================================================
-         BOOKMARKLET WIRING — unchanged contract from prior build
+         BOOKMARKLET WIRING
+         Show buttons work immediately — they only need the iife.js URL.
+         Drag + Copy wait on the bookmarklet source to arrive, but we
+         pre-attach preventDefault so mis-clicks don't scroll to the top.
          ============================================================ */
-      async function loadText(path) {
-        const res = await fetch(path);
-        return (await res.text()).trim();
-      }
+      const TOOLS = [
+        {
+          showId: "showAudit",
+          dragId: "dragAudit",
+          copyId: "copyAudit",
+          textareaId: "auditCode",
+          bookmarkletUrl: "./bookmarklet.js",
+          scriptUrl: "./audit-panel.iife.js",
+          flag: "__a11yLoaded",
+          destroy: "destroyA11yAudit",
+        },
+        {
+          showId: "showWidget",
+          dragId: "dragWidget",
+          copyId: "copyWidget",
+          textareaId: "widgetCode",
+          bookmarkletUrl: "./ux-widget-bookmarklet.js",
+          scriptUrl: "./ux-widget.iife.js",
+          flag: "__uxWidgetLoaded",
+          destroy: "destroyUxWidget",
+        },
+      ];
 
-      function showTool(scriptUrl, loadedFlag, destroyFn) {
-        if (window[loadedFlag]) {
-          window.A11yToolkit &&
-            window.A11yToolkit[destroyFn] &&
+      function injectIife(scriptUrl, flag, destroyFn) {
+        if (window[flag]) {
+          if (window.A11yToolkit && window.A11yToolkit[destroyFn]) {
             window.A11yToolkit[destroyFn]();
-          delete window[loadedFlag];
+          }
+          delete window[flag];
           return;
         }
         const s = document.createElement("script");
         s.src = scriptUrl;
         s.onload = () => {
-          window[loadedFlag] = true;
+          window[flag] = true;
+        };
+        s.onerror = () => {
+          console.error("Failed to load", scriptUrl);
         };
         document.head.appendChild(s);
       }
 
-      function wireTool(code, showId, dragId, copyId, textareaId, showConfig) {
-        document.getElementById(textareaId).value = code;
-        document.getElementById(dragId).href = code;
-        document.getElementById(showId).addEventListener("click", (e) => {
-          e.preventDefault();
-          showTool(showConfig.url, showConfig.flag, showConfig.destroy);
-        });
-        document.getElementById(copyId).addEventListener("click", async (e) => {
-          e.preventDefault();
-          await navigator.clipboard.writeText(code);
-          e.currentTarget.textContent = "Copied";
-        });
-      }
+      TOOLS.forEach((t) => {
+        const showBtn = document.getElementById(t.showId);
+        const dragLink = document.getElementById(t.dragId);
+        const copyBtn = document.getElementById(t.copyId);
+        const textarea = document.getElementById(t.textareaId);
 
-      Promise.all([
-        loadText("./bookmarklet.js"),
-        loadText("./ux-widget-bookmarklet.js"),
-      ]).then(([auditCode, widgetCode]) => {
-        wireTool(
-          auditCode,
-          "showAudit",
-          "dragAudit",
-          "copyAudit",
-          "auditCode",
-          {
-            url: "./audit-panel.iife.js",
-            flag: "__a11yLoaded",
-            destroy: "destroyA11yAudit",
-          },
-        );
-        wireTool(
-          widgetCode,
-          "showWidget",
-          "dragWidget",
-          "copyWidget",
-          "widgetCode",
-          {
-            url: "./ux-widget.iife.js",
-            flag: "__uxWidgetLoaded",
-            destroy: "destroyUxWidget",
-          },
-        );
+        showBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          injectIife(t.scriptUrl, t.flag, t.destroy);
+        });
+
+        dragLink.addEventListener("click", (e) => e.preventDefault());
+
+        copyBtn.addEventListener("click", async (e) => {
+          e.preventDefault();
+          const code = textarea.value;
+          if (!code) return;
+          try {
+            await navigator.clipboard.writeText(code);
+            copyBtn.textContent = "Copied";
+          } catch (err) {
+            textarea.select();
+            document.execCommand("copy");
+            copyBtn.textContent = "Copied";
+          }
+        });
+
+        fetch(t.bookmarkletUrl)
+          .then((r) => {
+            if (!r.ok) throw new Error("HTTP " + r.status);
+            return r.text();
+          })
+          .then((code) => {
+            code = code.trim();
+            textarea.value = code;
+            dragLink.href = code;
+          })
+          .catch((err) => {
+            console.error("Bookmarklet load failed:", t.bookmarkletUrl, err);
+            textarea.value =
+              "// Failed to load bookmarklet source. Use 'Show' to run directly.";
+          });
       });
     </script>
   </body>
