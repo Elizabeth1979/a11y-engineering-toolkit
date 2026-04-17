@@ -1,332 +1,793 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>A11y Engineering Toolkit</title>
-  <style>
-    :root {
-      --bg: #07111b;
-      --card: rgba(15, 23, 36, 0.88);
-      --card-2: rgba(10, 18, 30, 0.92);
-      --border: rgba(148, 163, 184, 0.16);
-      --text: #e6f1f7;
-      --text-2: #b6c9d6;
-      --accent: #5de4d4;
-      --accent-2: #7dd3fc;
-      --shadow: 0 30px 80px rgba(0, 0, 0, 0.38);
-      --radius: 20px;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Inter, system-ui, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(93, 228, 212, 0.10), transparent 30%),
-        radial-gradient(circle at top right, rgba(125, 211, 252, 0.10), transparent 28%),
-        linear-gradient(180deg, #07111b 0%, #08131f 100%);
-      color: var(--text);
-      line-height: 1.55;
-    }
-    .wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 40px 20px 72px;
-    }
-    .hero {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 22px;
-      align-items: stretch;
-    }
-    .hero-card, .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-    }
-    .hero-card { padding: 28px; }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(93, 228, 212, 0.10);
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-    h1 {
-      margin: 16px 0 12px;
-      font-size: clamp(34px, 6vw, 56px);
-      line-height: 1.02;
-      letter-spacing: -0.03em;
-    }
-    .lead {
-      margin: 0;
-      max-width: 680px;
-      color: var(--text-2);
-      font-size: 18px;
-    }
-    .hero-side {
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .hero-side h2, .card h2 {
-      margin: 0 0 10px;
-      font-size: 22px;
-    }
-    .muted { color: var(--text-2); }
-    .bullets {
-      display: grid;
-      gap: 12px;
-      margin-top: 18px;
-    }
-    .bullet {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      color: var(--text-2);
-      font-size: 15px;
-    }
-    .bullet-dot {
-      width: 9px;
-      height: 9px;
-      margin-top: 7px;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 16px rgba(93, 228, 212, 0.65);
-      flex-shrink: 0;
-    }
-    .tools {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 22px;
-      margin-top: 22px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 22px;
-      margin-top: 22px;
-    }
-    .card {
-      padding: 24px;
-      background: var(--card-2);
-    }
-    .tool-name {
-      color: var(--accent);
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .tool-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 18px;
-    }
-    .button, .drag-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      min-height: 46px;
-      padding: 12px 18px;
-      border-radius: 14px;
-      font-weight: 700;
-      text-decoration: none;
-      transition: transform 0.18s ease, filter 0.18s ease;
-    }
-    .button:hover, .drag-link:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.05);
-    }
-    .drag-link {
-      background: linear-gradient(135deg, var(--accent), #4fd1c5);
-      color: #05232a;
-    }
-    .button.secondary {
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
-    }
-    .callout {
-      margin-top: 16px;
-      padding: 14px 16px;
-      border-radius: 14px;
-      background: rgba(93, 228, 212, 0.08);
-      border: 1px solid rgba(93, 228, 212, 0.16);
-      color: var(--text);
-      font-size: 14px;
-    }
-    ol {
-      margin: 14px 0 0;
-      padding-left: 22px;
-      color: var(--text-2);
-    }
-    li + li { margin-top: 8px; }
-    textarea {
-      width: 100%;
-      min-height: 120px;
-      margin-top: 14px;
-      padding: 14px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(2, 8, 18, 0.72);
-      color: #d9eef5;
-      font: 13px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace;
-      resize: vertical;
-    }
-    .small-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 16px;
-    }
-    .small-links a {
-      color: var(--accent-2);
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .small-links a:hover { text-decoration: underline; }
-    .footer {
-      margin-top: 24px;
-      color: var(--text-2);
-      font-size: 14px;
-    }
-    @media (max-width: 860px) {
-      .hero, .tools, .grid { grid-template-columns: 1fr; }
-      .wrap { padding-top: 22px; }
-    }
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <section class="hero">
-      <div class="hero-card">
-        <div class="eyebrow">Accessibility toolkit</div>
-        <h1>Tester tools in one place</h1>
-        <p class="lead">Drag a bookmark into your browser and use the A11y Audit Panel or the A11y UX Widget on any page. No extension needed.</p>
-        <div class="callout">If drag-and-drop does not work, copy the bookmarklet below and paste it into the URL or location field of a new bookmark.</div>
-      </div>
-      <aside class="hero-side hero-card">
-        <div>
-          <h2>What you get</h2>
-          <div class="bullets">
-            <div class="bullet"><span class="bullet-dot"></span><span>Audit panel for accessibility testing and issue spotting.</span></div>
-            <div class="bullet"><span class="bullet-dot"></span><span>UX widget for contrast, fonts, motion, cursor, and reading support.</span></div>
-            <div class="bullet"><span class="bullet-dot"></span><span>One public toolkit page, one repo, shared updates.</span></div>
-            <div class="bullet"><span class="bullet-dot"></span><span>Portfolio-backed scope: shared accessibility modules, workflows, docs, and research.</span></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>A11y Engineering Toolkit</title>
+    <style>
+      :root {
+        --bg: #07111b;
+        --card: rgba(15, 23, 36, 0.88);
+        --card-2: rgba(10, 18, 30, 0.92);
+        --border: rgba(148, 163, 184, 0.16);
+        --text: #e6f1f7;
+        --text-2: #b6c9d6;
+        --accent: #5de4d4;
+        --accent-2: #7dd3fc;
+        --shadow: 0 30px 80px rgba(0, 0, 0, 0.38);
+        --radius: 20px;
+
+        --status-production: #5de4d4;
+        --status-production-bg: rgba(93, 228, 212, 0.12);
+        --status-active: #7dd3fc;
+        --status-active-bg: rgba(125, 211, 252, 0.12);
+        --status-wip: #fbbf24;
+        --status-wip-bg: rgba(251, 191, 36, 0.12);
+        --status-edu: #c4b5fd;
+        --status-edu-bg: rgba(196, 181, 253, 0.14);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, sans-serif;
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(93, 228, 212, 0.1),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at top right,
+            rgba(125, 211, 252, 0.1),
+            transparent 28%
+          ),
+          linear-gradient(180deg, #07111b 0%, #08131f 100%);
+        color: var(--text);
+        line-height: 1.55;
+      }
+      .wrap {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 40px 20px 72px;
+      }
+      .hero {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(10px);
+        padding: 32px;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(93, 228, 212, 0.1);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      h1 {
+        margin: 16px 0 12px;
+        font-size: clamp(34px, 6vw, 52px);
+        line-height: 1.02;
+        letter-spacing: -0.03em;
+      }
+      .lead {
+        margin: 0;
+        max-width: 740px;
+        color: var(--text-2);
+        font-size: 18px;
+      }
+      section + section {
+        margin-top: 36px;
+      }
+      h2.section-title {
+        margin: 0 0 4px;
+        font-size: 26px;
+        letter-spacing: -0.01em;
+      }
+      .section-sub {
+        margin: 0 0 20px;
+        color: var(--text-2);
+        font-size: 15px;
+      }
+      .card {
+        background: var(--card-2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 24px;
+        backdrop-filter: blur(10px);
+      }
+      .muted {
+        color: var(--text-2);
+      }
+
+      /* Portfolio grid */
+      .category {
+        margin-top: 24px;
+      }
+      .category-label {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+      .category-label::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+      .repo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 16px;
+      }
+      .repo-card {
+        background: var(--card-2);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        text-decoration: none;
+        color: inherit;
+        transition:
+          transform 0.18s ease,
+          border-color 0.18s ease,
+          background 0.18s ease;
+      }
+      .repo-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(93, 228, 212, 0.4);
+        background: rgba(15, 23, 36, 1);
+      }
+      .repo-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .repo-name {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 15px;
+        color: var(--accent-2);
+        font-weight: 700;
+      }
+      .badge {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .badge-production {
+        color: var(--status-production);
+        background: var(--status-production-bg);
+      }
+      .badge-active {
+        color: var(--status-active);
+        background: var(--status-active-bg);
+      }
+      .badge-wip {
+        color: var(--status-wip);
+        background: var(--status-wip-bg);
+      }
+      .badge-edu {
+        color: var(--status-edu);
+        background: var(--status-edu-bg);
+      }
+      .repo-desc {
+        color: var(--text-2);
+        font-size: 14px;
+        margin: 0;
+      }
+
+      /* Methodology */
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        gap: 14px;
+        margin-top: 16px;
+      }
+      .step {
+        background: var(--card-2);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 18px;
+      }
+      .step-num {
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .step-title {
+        margin: 6px 0 6px;
+        font-size: 16px;
+        font-weight: 700;
+      }
+      .step-desc {
+        margin: 0;
+        font-size: 13px;
+        color: var(--text-2);
+        line-height: 1.5;
+      }
+
+      /* Architecture */
+      .arch-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .arch-card {
+        background: var(--card-2);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 20px;
+      }
+      .arch-label {
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .arch-title {
+        margin: 6px 0 8px;
+        font-size: 18px;
+      }
+      .arch-desc {
+        margin: 0;
+        color: var(--text-2);
+        font-size: 14px;
+      }
+
+      /* Bookmarklet tools */
+      .tools-intro {
+        margin: 0 0 20px;
+        color: var(--text-2);
+        font-size: 15px;
+        max-width: 720px;
+      }
+      .tools {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+      }
+      .tool-name {
+        color: var(--accent);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+      .tool-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 18px;
+      }
+      .button,
+      .drag-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 46px;
+        padding: 12px 18px;
+        border-radius: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        transition:
+          transform 0.18s ease,
+          filter 0.18s ease;
+      }
+      .button:hover,
+      .drag-link:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.05);
+      }
+      .drag-link {
+        background: linear-gradient(135deg, var(--accent), #4fd1c5);
+        color: #05232a;
+      }
+      .button.secondary {
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text);
+      }
+      .callout {
+        margin-top: 16px;
+        padding: 14px 16px;
+        border-radius: 14px;
+        background: rgba(93, 228, 212, 0.08);
+        border: 1px solid rgba(93, 228, 212, 0.16);
+        color: var(--text);
+        font-size: 14px;
+      }
+      .code-fallback {
+        margin-top: 14px;
+      }
+      .code-fallback summary {
+        cursor: pointer;
+        color: var(--text-2);
+        font-size: 13px;
+        padding: 8px 0;
+      }
+      .code-fallback summary:hover {
+        color: var(--accent-2);
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      textarea {
+        width: 100%;
+        min-height: 120px;
+        margin-top: 14px;
+        padding: 14px;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        background: rgba(2, 8, 18, 0.72);
+        color: #d9eef5;
+        font:
+          13px/1.45 ui-monospace,
+          SFMono-Regular,
+          Menlo,
+          monospace;
+        resize: vertical;
+      }
+
+      /* Footer grid */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+      }
+      ol {
+        margin: 14px 0 0;
+        padding-left: 22px;
+        color: var(--text-2);
+      }
+      li + li {
+        margin-top: 8px;
+      }
+      .small-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 16px;
+      }
+      .small-links a {
+        color: var(--accent-2);
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .small-links a:hover {
+        text-decoration: underline;
+      }
+      .footer {
+        margin-top: 40px;
+        padding-top: 24px;
+        border-top: 1px solid var(--border);
+        color: var(--text-2);
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      @media (max-width: 860px) {
+        .tools,
+        .grid,
+        .arch-grid {
+          grid-template-columns: 1fr;
+        }
+        .wrap {
+          padding-top: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <!-- HERO -->
+      <section class="hero">
+        <div class="eyebrow">Accessibility Engineering</div>
+        <h1>Accessibility Engineering Toolkit</h1>
+        <p class="lead">
+          A portfolio of accessibility engineering work — browser modules, AI
+          integrations, CLI testing, screen-reader tooling, and developer
+          education. Built around a consistent methodology: research, guideline,
+          audit, triage, fix.
+        </p>
+      </section>
+
+      <!-- PORTFOLIO -->
+      <section aria-labelledby="portfolio-heading">
+        <h2 id="portfolio-heading" class="section-title">Portfolio</h2>
+        <p class="section-sub">
+          Eight active repositories, grouped by where they sit in an
+          accessibility workflow.
+        </p>
+
+        <div class="category">
+          <div class="category-label">Tools</div>
+          <div class="repo-grid">
+            <a
+              class="repo-card"
+              href="https://github.com/Elizabeth1979/a11y-engineering-toolkit"
+            >
+              <div class="repo-head">
+                <span class="repo-name">a11y-engineering-toolkit</span>
+                <span class="badge badge-production">Production</span>
+              </div>
+              <p class="repo-desc">
+                Umbrella repo — audit panel and UX widget. The page you're
+                reading now.
+              </p>
+            </a>
+            <a
+              class="repo-card"
+              href="https://github.com/Elizabeth1979/screen-reader-cli"
+            >
+              <div class="repo-head">
+                <span class="repo-name">screen-reader-cli</span>
+                <span class="badge badge-production">Production</span>
+              </div>
+              <p class="repo-desc">
+                CLI for screen-reader-driven testing: scan, live SR, audit, and
+                test generation (Virtual Screen Reader + Playwright).
+              </p>
+            </a>
+            <a
+              class="repo-card"
+              href="https://github.com/Elizabeth1979/clip-to-ticket"
+            >
+              <div class="repo-head">
+                <span class="repo-name">clip-to-ticket</span>
+                <span class="badge badge-production">v1.5.0</span>
+              </div>
+              <p class="repo-desc">
+                Turns screenshots and recordings into WCAG-compliant
+                accessibility tickets.
+              </p>
+            </a>
           </div>
         </div>
-        <div class="footer">Built for testers first. Developer files and toolkit scope are below.</div>
-    </aside>
-  </section>
 
-  <section class="grid">
-    <div class="card">
-      <h2>Toolkit scope</h2>
-      <p class="muted">This repo is the umbrella and public entry point. Some accessibility assets live here directly, and some stay as linked module repos. Right now, both a11y-expert-mcp and a11y-skills stay separate and are linked instead of being merged in.</p>
-      <div class="small-links">
-        <a href="https://github.com/Elizabeth1979/a11y-expert-mcp">a11y-expert-mcp</a>
-        <a href="https://github.com/Elizabeth1979/a11y-skills">a11y-skills</a>
-        <a href="https://github.com/Elizabeth1979/sr-visualizer">sr-visualizer</a>
-        <a href="https://github.com/Elizabeth1979/accessibility-validator">accessibility-validator</a>
-        <a href="./portfolio-inventory.md">portfolio inventory</a>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>How this works</h2>
-      <ol>
-        <li>Keep shared accessibility engineering assets here.</li>
-        <li>Keep portfolio repos as references until extraction is worth it.</li>
-        <li>Promote the best parts into modules, workflows, docs, or research inputs.</li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="tools">
-      <div class="card">
-        <div class="tool-name">Tool 1</div>
-        <h2>A11y Audit Panel</h2>
-        <p class="muted">Visual accessibility auditor: headings, landmarks, alt text, labels, hidden content, tab order, contrast, focus, ARIA, and form checks.</p>
-        <div class="tool-actions">
-          <a class="drag-link" id="dragAudit" href="#">Drag audit panel</a>
-          <a class="button secondary" id="copyAudit" href="#">Copy</a>
+        <div class="category">
+          <div class="category-label">AI &amp; Agents</div>
+          <div class="repo-grid">
+            <a
+              class="repo-card"
+              href="https://github.com/Elizabeth1979/a11y-expert-mcp"
+            >
+              <div class="repo-head">
+                <span class="repo-name">a11y-expert-mcp</span>
+                <span class="badge badge-active">v0.1.0</span>
+              </div>
+              <p class="repo-desc">
+                MCP server that gives AI assistants accessibility expertise — 4
+                tools, 33 ARIA patterns, published to PyPI.
+              </p>
+            </a>
+            <a
+              class="repo-card"
+              href="https://github.com/Elizabeth1979/a11y-skills"
+            >
+              <div class="repo-head">
+                <span class="repo-name">a11y-skills</span>
+                <span class="badge badge-active">Active</span>
+              </div>
+              <p class="repo-desc">
+                Canonical source for ARIA pattern instruction files. Feeds
+                a11y-expert-mcp and other AI integrations.
+              </p>
+            </a>
+            <a
+              class="repo-card"
+              href="https://github.com/Elizabeth1979/visua11y"
+            >
+              <div class="repo-head">
+                <span class="repo-name">visua11y</span>
+                <span class="badge badge-wip">WIP</span>
+              </div>
+              <p class="repo-desc">
+                Chrome extension: AI-assisted accessibility helper for
+                day-to-day browsing and review.
+              </p>
+            </a>
+          </div>
         </div>
-        <textarea id="auditCode" readonly></textarea>
-      </div>
 
-      <div class="card">
-        <div class="tool-name">Tool 2</div>
-        <h2>A11y UX Widget</h2>
-        <p class="muted">Live accessibility customization: contrast, color vision filters, dyslexia font, font size, focus, motion, spacing, reading guide, and big cursor.</p>
-        <div class="tool-actions">
-          <a class="drag-link" id="dragWidget" href="#">Drag UX widget</a>
-          <a class="button secondary" id="copyWidget" href="#">Copy</a>
+        <div class="category">
+          <div class="category-label">Testing &amp; Simulation</div>
+          <div class="repo-grid">
+            <a
+              class="repo-card"
+              href="https://github.com/Elizabeth1979/sr-visualizer"
+            >
+              <div class="repo-head">
+                <span class="repo-name">sr-visualizer</span>
+                <span class="badge badge-wip">WIP</span>
+              </div>
+              <p class="repo-desc">
+                Screen reader simulation in the browser, with violation
+                detection and AI-powered fix suggestions.
+              </p>
+            </a>
+          </div>
         </div>
-        <textarea id="widgetCode" readonly></textarea>
-      </div>
-    </section>
 
-    <section class="grid">
-      <div class="card">
-        <h2>How to use</h2>
-        <ol>
-          <li>Show your browser bookmarks bar.</li>
-          <li>Drag one of the buttons above into the bookmarks bar.</li>
-          <li>Open any site or local page you want to test.</li>
-          <li>Click the bookmark to open that tool.</li>
-        </ol>
-      </div>
+        <div class="category">
+          <div class="category-label">Education</div>
+          <div class="repo-grid">
+            <a
+              class="repo-card"
+              href="https://github.com/Elizabeth1979/a11y-for-feds-intro"
+            >
+              <div class="repo-head">
+                <span class="repo-name">a11y-for-feds-intro</span>
+                <span class="badge badge-edu">Educational</span>
+              </div>
+              <p class="repo-desc">
+                Developer workshop with 165 slides and visual simulations — an
+                on-ramp into accessibility engineering.
+              </p>
+            </a>
+          </div>
+        </div>
 
-      <div class="card">
-        <h2>Developer files</h2>
-        <p class="muted">If you are integrating or hosting these tools yourself:</p>
         <div class="small-links">
-          <a href="./audit-panel.iife.js">audit-panel.iife.js</a>
-          <a href="./bookmarklet.js">audit-panel bookmarklet</a>
-          <a href="./ux-widget.iife.js">ux-widget.iife.js</a>
-          <a href="./ux-widget-bookmarklet.js">ux-widget bookmarklet</a>
-          <a href="https://github.com/Elizabeth1979/a11y-engineering-toolkit">GitHub repo</a>
+          <a
+            href="https://github.com/Elizabeth1979/a11y-engineering-toolkit/blob/main/docs/portfolio-inventory.md"
+            >Full portfolio inventory →</a
+          >
         </div>
+      </section>
+
+      <!-- METHODOLOGY -->
+      <section aria-labelledby="method-heading">
+        <h2 id="method-heading" class="section-title">How I work</h2>
+        <p class="section-sub">
+          The portfolio is the output of a consistent five-step methodology.
+          Each tool in the portfolio instruments one or more of these steps.
+        </p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">Step 1</div>
+            <div class="step-title">Research</div>
+            <p class="step-desc">
+              Investigate a component against WAI-ARIA Authoring Practices,
+              screen-reader behavior, and WCAG criteria before proposing a
+              contract.
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-num">Step 2</div>
+            <div class="step-title">Guideline</div>
+            <p class="step-desc">
+              Document the accessible contract: roles, states, keyboard
+              interaction, focus management, and announcement expectations.
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-num">Step 3</div>
+            <div class="step-title">Audit</div>
+            <p class="step-desc">
+              Layered testing: axe, Vitest + Testing Library, Playwright, plus
+              manual screen-reader verification.
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-num">Step 4</div>
+            <div class="step-title">Triage</div>
+            <p class="step-desc">
+              Every violation gets a WCAG criterion, reproduction steps,
+              expected vs. actual, and acceptance criteria before it reaches a
+              developer.
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-num">Step 5</div>
+            <div class="step-title">Fix &amp; regression</div>
+            <p class="step-desc">
+              Ship the fix with tests that lock in the accessible behavior so
+              the regression is caught automatically next time.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ARCHITECTURE -->
+      <section aria-labelledby="arch-heading">
+        <h2 id="arch-heading" class="section-title">Architecture</h2>
+        <p class="section-sub">Why the portfolio is shaped the way it is.</p>
+        <div class="arch-grid">
+          <div class="arch-card">
+            <div class="arch-label">Problem</div>
+            <h3 class="arch-title">Accessibility knowledge is scattered</h3>
+            <p class="arch-desc">
+              Patterns, heuristics, test recipes, and ticket templates live
+              across people's heads, wikis, and ad-hoc scripts. AI tools don't
+              consistently apply them.
+            </p>
+          </div>
+          <div class="arch-card">
+            <div class="arch-label">Solution</div>
+            <h3 class="arch-title">Composable accessibility modules</h3>
+            <p class="arch-desc">
+              Small, focused repos — each handling one job (audit, simulation,
+              AI guidance, ticketing) — unified by a shared portfolio surface
+              and a consistent methodology.
+            </p>
+          </div>
+          <div class="arch-card">
+            <div class="arch-label">Scope</div>
+            <h3 class="arch-title">Link first, merge later</h3>
+            <p class="arch-desc">
+              This repo is the umbrella and public entry point. Linked modules
+              stay in their own repos until there's a real benefit to merging —
+              shared release flow, shared tests, or reduced duplication.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- BOOKMARKLET TOOLS -->
+      <section aria-labelledby="tools-heading">
+        <h2 id="tools-heading" class="section-title">Try the browser tools</h2>
+        <p class="tools-intro">
+          Drag a bookmark into your browser and use the A11y Audit Panel or the
+          A11y UX Widget on any page. No extension needed. If drag-and-drop
+          doesn't work, copy the bookmarklet below and paste it into the URL
+          field of a new bookmark.
+        </p>
+
+        <div class="tools">
+          <div class="card">
+            <div class="tool-name">Tool 1</div>
+            <h2>A11y Audit Panel</h2>
+            <p class="muted">
+              Visual accessibility auditor: headings, landmarks, alt text,
+              labels, hidden content, tab order, contrast, focus, ARIA, and form
+              checks.
+            </p>
+            <div class="tool-actions">
+              <a class="drag-link" id="dragAudit" href="#">Drag audit panel</a>
+              <a class="button secondary" id="copyAudit" href="#">Copy</a>
+            </div>
+            <details class="code-fallback">
+              <summary>Show bookmarklet code (manual paste fallback)</summary>
+              <label class="sr-only" for="auditCode"
+                >Audit panel bookmarklet code</label
+              >
+              <textarea id="auditCode" readonly></textarea>
+            </details>
+          </div>
+
+          <div class="card">
+            <div class="tool-name">Tool 2</div>
+            <h2>A11y UX Widget</h2>
+            <p class="muted">
+              Live accessibility customization: contrast, color vision filters,
+              dyslexia font, font size, focus, motion, spacing, reading guide,
+              and big cursor.
+            </p>
+            <div class="tool-actions">
+              <a class="drag-link" id="dragWidget" href="#">Drag UX widget</a>
+              <a class="button secondary" id="copyWidget" href="#">Copy</a>
+            </div>
+            <details class="code-fallback">
+              <summary>Show bookmarklet code (manual paste fallback)</summary>
+              <label class="sr-only" for="widgetCode"
+                >UX widget bookmarklet code</label
+              >
+              <textarea id="widgetCode" readonly></textarea>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- USAGE + DEV -->
+      <section class="grid">
+        <div class="card">
+          <h2>How to use the bookmarklets</h2>
+          <ol>
+            <li>Show your browser bookmarks bar.</li>
+            <li>Drag one of the buttons above into the bookmarks bar.</li>
+            <li>Open any site or local page you want to test.</li>
+            <li>Click the bookmark to open that tool.</li>
+          </ol>
+        </div>
+
+        <div class="card">
+          <h2>Developer files</h2>
+          <p class="muted">
+            If you are integrating or hosting these tools yourself:
+          </p>
+          <div class="small-links">
+            <a href="./audit-panel.iife.js">audit-panel.iife.js</a>
+            <a href="./bookmarklet.js">audit-panel bookmarklet</a>
+            <a href="./ux-widget.iife.js">ux-widget.iife.js</a>
+            <a href="./ux-widget-bookmarklet.js">ux-widget bookmarklet</a>
+            <a href="https://github.com/Elizabeth1979/a11y-engineering-toolkit"
+              >GitHub repo</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <div class="footer">
+        <span
+          >MIT licensed · Built for accessibility engineers and testers.</span
+        >
+        <span
+          ><a
+            style="
+              color: var(--accent-2);
+              text-decoration: none;
+              font-weight: 600;
+            "
+            href="https://github.com/Elizabeth1979"
+            >More on GitHub →</a
+          ></span
+        >
       </div>
-    </section>
-  </div>
+    </div>
 
-  <script>
-    async function loadText(path) {
-      const res = await fetch(path);
-      return (await res.text()).trim();
-    }
+    <script>
+      async function loadText(path) {
+        const res = await fetch(path);
+        return (await res.text()).trim();
+      }
 
-    function wireTool(code, dragId, copyId, textareaId) {
-      document.getElementById(textareaId).value = code;
-      document.getElementById(dragId).href = code;
-      document.getElementById(copyId).addEventListener('click', async (e) => {
-        e.preventDefault();
-        await navigator.clipboard.writeText(code);
-        e.target.textContent = 'Copied';
+      function wireTool(code, dragId, copyId, textareaId) {
+        document.getElementById(textareaId).value = code;
+        document.getElementById(dragId).href = code;
+        document.getElementById(copyId).addEventListener("click", async (e) => {
+          e.preventDefault();
+          await navigator.clipboard.writeText(code);
+          e.target.textContent = "Copied";
+        });
+      }
+
+      Promise.all([
+        loadText("./bookmarklet.js"),
+        loadText("./ux-widget-bookmarklet.js"),
+      ]).then(([auditCode, widgetCode]) => {
+        wireTool(auditCode, "dragAudit", "copyAudit", "auditCode");
+        wireTool(widgetCode, "dragWidget", "copyWidget", "widgetCode");
       });
-    }
-
-    Promise.all([
-      loadText('./bookmarklet.js'),
-      loadText('./ux-widget-bookmarklet.js')
-    ]).then(([auditCode, widgetCode]) => {
-      wireTool(auditCode, 'dragAudit', 'copyAudit', 'auditCode');
-      wireTool(widgetCode, 'dragWidget', 'copyWidget', 'widgetCode');
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>
