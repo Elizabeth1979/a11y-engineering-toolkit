@@ -8,7 +8,7 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "vitest run --config packages/audit-panel/vitest.config.js && vitest run --config packages/ux-widget/vitest.config.js",
+    "test": "vitest run",
     "test:audit-panel": "vitest run --config packages/audit-panel/vitest.config.js",
     "test:ux-widget": "vitest run --config packages/ux-widget/vitest.config.js",
     "test:watch": "vitest --config packages/audit-panel/vitest.config.js",
