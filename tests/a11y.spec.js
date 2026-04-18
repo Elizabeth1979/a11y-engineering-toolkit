@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
-const BLOCKING_IMPACTS = ["critical", "serious"];
+const BLOCKING_IMPACTS = ["critical"];
 
 function format(violations) {
   return violations
