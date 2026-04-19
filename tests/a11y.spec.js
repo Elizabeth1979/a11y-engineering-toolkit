@@ -1,9 +1,10 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import { appendFileSync } from "node:fs";
 
 const BLOCKING_IMPACTS = ["critical"];
 
-function format(violations) {
+function formatConsole(violations) {
   return violations
     .map((v) => {
       const nodes = v.nodes
@@ -12,6 +13,32 @@ function format(violations) {
       return `  - [${v.impact}] ${v.id}: ${v.help}\n${nodes}\n    ${v.helpUrl}`;
     })
     .join("\n");
+}
+
+function formatMarkdown(theme, blocking, nonBlocking) {
+  const lines = [`### axe scan — ${theme} theme`, ""];
+  if (!blocking.length && !nonBlocking.length) {
+    lines.push("No violations found.", "");
+    return lines.join("\n");
+  }
+  const section = (title, list) => {
+    if (!list.length) return;
+    lines.push(`**${title}**`, "");
+    lines.push("| Impact | Rule | Help | Elements |");
+    lines.push("| --- | --- | --- | --- |");
+    for (const v of list) {
+      const targets = v.nodes
+        .map((n) => `\`${n.target.join(", ")}\``)
+        .join("<br>");
+      lines.push(
+        `| ${v.impact} | \`${v.id}\` | [${v.help}](${v.helpUrl}) | ${targets} |`,
+      );
+    }
+    lines.push("");
+  };
+  section("Blocking (fails CI)", blocking);
+  section("Non-blocking (logged only)", nonBlocking);
+  return lines.join("\n");
 }
 
 for (const theme of ["light", "dark"]) {
@@ -37,12 +64,19 @@ for (const theme of ["light", "dark"]) {
       console.log(
         `\n[${theme}] Non-blocking axe findings (moderate/minor) — not failing CI:`,
       );
-      console.log(format(nonBlocking));
+      console.log(formatConsole(nonBlocking));
     }
 
     if (blocking.length) {
       console.log(`\n[${theme}] Blocking axe violations (critical/serious):`);
-      console.log(format(blocking));
+      console.log(formatConsole(blocking));
+    }
+
+    if (process.env.GITHUB_STEP_SUMMARY) {
+      appendFileSync(
+        process.env.GITHUB_STEP_SUMMARY,
+        formatMarkdown(theme, blocking, nonBlocking) + "\n",
+      );
     }
 
     expect(
