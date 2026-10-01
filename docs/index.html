@@ -86,9 +86,9 @@
         --muted: #575755;
         --rule: rgba(20, 20, 23, 0.16);
         --rule-strong: rgba(20, 20, 23, 0.32);
-        --accent: #c8502b;
+        --accent: #ab4425;
         --accent-ink: #fef9ef;
-        --accent-soft: rgba(200, 80, 43, 0.12);
+        --accent-soft: rgba(171, 68, 37, 0.12);
         --code-bg: #1a1a1d;
         --code-ink: #f0ebde;
         --grain-opacity: 0.035;
@@ -920,11 +920,11 @@
           </p>
           <div class="hero-meta reveal" data-delay="3">
             <div class="hero-stat">
-              <span class="num">08</span>
+              <span class="num">07</span>
               <span class="label mono">Public repos</span>
             </div>
             <div class="hero-stat">
-              <span class="num">33</span>
+              <span class="num">43</span>
               <span class="label mono">ARIA patterns</span>
             </div>
             <div class="hero-stat">
@@ -943,14 +943,38 @@
           <div class="section-head">
             <span class="section-num mono">01 / Portfolio</span>
             <h2 id="portfolio-heading">
-              Eight repositories, <em>one workflow</em>.
+              One engine, <em>one workflow</em>.
             </h2>
           </div>
           <p class="prose">
-            Grouped by where each one sits in an accessibility engineer's day —
-            from scanning a page, to drafting a ticket, to shipping the fix with
-            regression coverage.
+            The engine is the home: the tool developers run on every pull
+            request. Around it, grouped by where each sits in an accessibility
+            engineer's day — from scanning a page, to drafting a ticket, to
+            shipping the fix with regression coverage.
           </p>
+
+          <div class="category">
+            <div class="category-head">
+              <h3>Home</h3>
+              <span class="count mono">01 repo</span>
+            </div>
+            <div class="repo-grid">
+              <a
+                class="repo-card"
+                href="https://github.com/Elizabeth1979/accessibility-evidence-engine"
+              >
+                <div class="repo-head">
+                  <span class="repo-name">accessibility-evidence-engine</span>
+                  <span class="badge badge-production">Home</span>
+                </div>
+                <p class="repo-desc">
+                  Checks every pull request with axe, the keyboard, the mouse
+                  and a virtual screen reader; suggests labelled AI fixes; and
+                  proves a reviewed fix with a rerun.
+                </p>
+              </a>
+            </div>
+          </div>
 
           <div class="category">
             <div class="category-head">
@@ -1003,22 +1027,9 @@
           <div class="category">
             <div class="category-head">
               <h3>AI &amp; agents</h3>
-              <span class="count mono">03 repos</span>
+              <span class="count mono">02 repos</span>
             </div>
             <div class="repo-grid">
-              <a
-                class="repo-card"
-                href="https://github.com/Elizabeth1979/a11y-expert-mcp"
-              >
-                <div class="repo-head">
-                  <span class="repo-name">a11y-expert-mcp</span>
-                  <span class="badge badge-active">v0.1.0</span>
-                </div>
-                <p class="repo-desc">
-                  MCP server that gives AI assistants accessibility expertise —
-                  4 tools, 33 ARIA patterns, published to PyPI.
-                </p>
-              </a>
               <a
                 class="repo-card"
                 href="https://github.com/Elizabeth1979/a11y-skills"
@@ -1028,8 +1039,8 @@
                   <span class="badge badge-active">Active</span>
                 </div>
                 <p class="repo-desc">
-                  Canonical source for ARIA pattern instruction files. Feeds
-                  a11y-expert-mcp and other AI integrations.
+                  Canonical source for ARIA pattern files. The engine's reports
+                  and coding agents read them.
                 </p>
               </a>
               <a
@@ -1043,28 +1054,6 @@
                 <p class="repo-desc">
                   Chrome extension — AI-assisted accessibility helper for
                   day-to-day browsing and review.
-                </p>
-              </a>
-            </div>
-          </div>
-
-          <div class="category">
-            <div class="category-head">
-              <h3>Testing &amp; simulation</h3>
-              <span class="count mono">01 repo</span>
-            </div>
-            <div class="repo-grid">
-              <a
-                class="repo-card"
-                href="https://github.com/Elizabeth1979/sr-visualizer"
-              >
-                <div class="repo-head">
-                  <span class="repo-name">sr-visualizer</span>
-                  <span class="badge badge-wip">WIP</span>
-                </div>
-                <p class="repo-desc">
-                  Screen reader simulation in the browser, with violation
-                  detection and AI-powered fix suggestions.
                 </p>
               </a>
             </div>
@@ -1091,6 +1080,13 @@
               </a>
             </div>
           </div>
+
+          <p class="prose">
+            Archived, superseded by the engine, which now holds their useful
+            parts: accessibility-engine, a11y-agent, a11y-expert-mcp,
+            sr-visualizer, wcag-alt-generator and alt-generation-claude. The
+            inventory has every repo's fate and why.
+          </p>
 
           <div class="small-links">
             <a
@@ -1177,20 +1173,21 @@
             </div>
             <div class="arch-card">
               <div class="arch-label mono">Solution</div>
-              <h3 class="arch-title">Composable modules.</h3>
+              <h3 class="arch-title">One engine, shared patterns.</h3>
               <p class="arch-desc">
-                Small, focused repos — each handling one job (audit, simulation,
-                AI guidance, ticketing) — unified by a shared portfolio surface
-                and a consistent methodology.
+                One engine runs every check on each pull request, and the same
+                ARIA patterns explain every finding, so people and AI tools
+                apply the same guidance.
               </p>
             </div>
             <div class="arch-card">
               <div class="arch-label mono">Scope</div>
-              <h3 class="arch-title">Link first, merge later.</h3>
+              <h3 class="arch-title">One home, a few companions.</h3>
               <p class="arch-desc">
-                This repo is the umbrella and public entry point. Linked modules
-                stay in their own repos until there's a real benefit to merging
-                — shared release flow, shared tests, or reduced duplication.
+                The engine holds the checks, AI suggestions and fixes, so they
+                are built and tested once. Separate products and the shared
+                patterns stay in their own repos; earlier attempts are archived
+                once their useful parts are in the engine.
               </p>
             </div>
           </div>
