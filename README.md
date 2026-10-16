@@ -14,12 +14,15 @@ The home of the work is [`accessibility-evidence-engine`](https://github.com/Eli
 | [`a11y-skills`](https://github.com/Elizabeth1979/a11y-skills) | The ARIA pattern files the engine's reports and coding agents read | Keep |
 | [`screen-reader-cli`](https://github.com/Elizabeth1979/screen-reader-cli) | Screen-reader testing from the command line, including real VoiceOver and NVDA | Keep: separate product |
 | [`clip-to-ticket`](https://github.com/Elizabeth1979/clip-to-ticket) | Recordings → WCAG-compliant tickets | Keep: separate product |
+| [`sr-visualizer`](https://github.com/Elizabeth1979/sr-visualizer) | Shows what a screen reader says next to each part of the page, for designers, product managers and training | Keep: separate product |
+| [`alt-generation-claude`](https://github.com/Elizabeth1979/alt-generation-claude) | Drop in an image, get alt text, for content editors ([live](https://alt-generation-claude.vercel.app)) | Keep: separate product |
 | [`a11y-engineering-toolkit`](https://github.com/Elizabeth1979/a11y-engineering-toolkit) | Audit panel, UX widget and this portfolio page | Keep |
 | [`a11y-for-feds-intro`](https://github.com/Elizabeth1979/a11y-for-feds-intro) | Developer workshop with visual simulations | Keep |
 | `bookmarklets` | Visual overlays: headings, tab order, alt text, focus | Keep |
 | [`visua11y`](https://github.com/Elizabeth1979/visua11y), `accessible-search`, `a11y-first-ext`, `a11y-booth-game` | Not duplicates of anything the engine does (`visua11y` is a reading aid for end users) | Keep |
-| `accessibility-engine`, `a11y-agent`, `a11y-expert-mcp`, `sr-visualizer`, `wcag-alt-generator`, `alt-generation-claude` | Earlier attempts at parts of what the engine now does | Archive: superseded by AEE |
-| `a11y-memory-game`, `a11y-html-aria`, `a11y-interactions` | Workshop forks | Archive |
+| `a11y-memory-game` | A keyboard and screen-reader memory game | Keep |
+| `accessibility-engine`, `a11y-agent`, `a11y-expert-mcp`, `wcag-alt-generator` | Earlier attempts at what the engine, or a kept product, now does for the same people | Archived: superseded |
+| `a11y-html-aria`, `a11y-interactions` | Workshop forks | Archived |
 | `accessibility-validator`, `any-access` | Checks that axe and `a11y-skills` already cover | Delete |
 
 Full inventory with how each repo maps into the work: [`docs/portfolio-inventory.md`](docs/portfolio-inventory.md).
@@ -110,7 +113,7 @@ destroyA11yWidget();
 - `a11y-engineering-toolkit` is the public entry point and portfolio page
 - `a11y-skills` stays its own repo as the canonical source for ARIA pattern instruction files
 
-Separate products stay separate. A repo is archived only once what was worth keeping from it is in the engine.
+Separate products stay separate: a repo someone would use on its own is kept, even when the engine has its code. Products split by audience and build on the one engine. A repo is archived only when a kept product already does its job for the same people.
 
 ## Operating rule
 

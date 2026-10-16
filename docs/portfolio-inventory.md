@@ -20,6 +20,9 @@ This file maps the accessibility engineering portfolio around its home, [`access
 - `a11y-skills` — the canonical ARIA pattern files. The engine's reports link to them and its MCP `explain` tool serves them; coding agents read them directly.
 - `screen-reader-cli` — a separate product for screen-reader testing, including real VoiceOver and NVDA. Its `scan` repeats the engine's Playwright + axe pipeline, so it routes through the engine later.
 - `clip-to-ticket` — a separate product: recordings → WCAG-compliant tickets. Its ticket format shaped the engine's "Copy as ticket".
+- `sr-visualizer` — a separate product: shows what a screen reader says next to each part of the page, for designers, product managers and training. It reads pages with the engine's virtual reader when next worked on.
+- `alt-generation-claude` — a separate product: drop in an image, get alt text, for content editors. Its alt-text rules and prompt also shaped the engine's image-purpose AI specialist.
+- `a11y-memory-game` — a keyboard and screen-reader memory game, the only copy in this account.
 - `a11y-engineering-toolkit` — this repo: the audit panel, the UX widget and the public portfolio page.
 - `a11y-for-feds-intro` — a developer workshop with its own purpose: fixing issues one by one.
 - `bookmarklets` — visual overlays (headings, tab order, alt text, focus). The engine's report now draws the same layers.
@@ -32,13 +35,10 @@ This file maps the accessibility engineering portfolio around its home, [`access
 | `accessibility-engine`  | AI providers, specialist prompts, the MCP server, apply-a-fix and the AI-sees-evidence-only guard |
 | `a11y-agent`            | The Playwright fixture's automatic checkpoint and the `fail-on` threshold                         |
 | `a11y-expert-mcp`       | Tool ideas, in the engine's MCP `explain` tool; its patterns were a stale copy of `a11y-skills`   |
-| `sr-visualizer`         | The report's screen-reader view                                                                   |
 | `wcag-alt-generator`    | Image-role classification, in the image-purpose AI specialist                                     |
-| `alt-generation-claude` | Alt-text rules and prompt, in the image-purpose AI specialist                                     |
 
 ## Archive: workshop forks
 
-- `a11y-memory-game` — the only copy of the game in this account
 - `a11y-html-aria` — a workshop fork with its own build fixes
 - `a11y-interactions` — a workshop fork
 
