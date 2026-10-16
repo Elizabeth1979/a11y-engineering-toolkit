@@ -42,9 +42,12 @@ This file maps the accessibility engineering portfolio around its home, [`access
 - `a11y-html-aria` — a workshop fork with its own build fixes
 - `a11y-interactions` — a workshop fork
 
-## Delete
+## Archived: covered by axe
 
-- `accessibility-validator` — a hand-written checker for rules axe already covers
+- `accessibility-validator` — a hand-written checker for five rules axe already covers. Archived rather than deleted, since archiving is reversible.
+
+## Deleted
+
 - `any-access` — three small scripts, all covered by `a11y-skills`
 
 ## Adjacent

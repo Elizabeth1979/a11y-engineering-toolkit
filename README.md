@@ -23,7 +23,8 @@ The home of the work is [`accessibility-evidence-engine`](https://github.com/Eli
 | `a11y-memory-game` | A keyboard and screen-reader memory game | Keep |
 | `accessibility-engine`, `a11y-agent`, `a11y-expert-mcp`, `wcag-alt-generator` | Earlier attempts at what the engine, or a kept product, now does for the same people | Archived: superseded |
 | `a11y-html-aria`, `a11y-interactions` | Workshop forks | Archived |
-| `accessibility-validator`, `any-access` | Checks that axe and `a11y-skills` already cover | Delete |
+| `accessibility-validator` | A checker for rules axe already covers | Archived |
+| `any-access` | Scripts `a11y-skills` already covers | Deleted |
 
 Full inventory with how each repo maps into the work: [`docs/portfolio-inventory.md`](docs/portfolio-inventory.md).
 
